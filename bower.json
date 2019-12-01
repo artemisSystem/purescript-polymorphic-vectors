@@ -1,6 +1,10 @@
 {
   "name": "purescript-polymorphic-vectors",
   "license": "MIT",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/3ddyy/purescript-polymorphic-vectors.git"
+  },
   "ignore": [
     "**/.*",
     "node_modules",
