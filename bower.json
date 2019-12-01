@@ -1,5 +1,6 @@
 {
   "name": "purescript-polymorphic-vectors",
+  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
