@@ -119,6 +119,6 @@ toRectangleWith
 toRectangleWith f = toRegion >>> map f >>>
   \(Rect (x >< y) (width >< height)) -> { x, y, width, height }
 
--- | Turn a rection represented with `Number`s into a `Rectangle`
+-- | Turn a region represented with `Number`s into a `Rectangle`
 toRectangle :: forall r. ToRegion Number r => r -> Rectangle
 toRectangle = toRectangleWith identity
