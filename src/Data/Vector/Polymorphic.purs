@@ -1,6 +1,5 @@
 module Data.Vector.Polymorphic
-  ( makeRect
-  , length
+  ( length
   , diagonal
   , inside
   , outside
@@ -22,14 +21,10 @@ import Prelude
 
 import Graphics.Canvas (Rectangle)
 import Data.Vector.Polymorphic.Types (Rect(..), (><))
-import Data.Vector.Polymorphic.Types (Rect(..), Vector2(..), (><)) as Types
+import Data.Vector.Polymorphic.Types (Rect(..), Vector2(..), (><), getX, getY, getPos, getSize, makeRect) as Types
 import Data.Vector.Polymorphic.Class (class AsPosEndo, class FromPos, class ToPos, class ToRegion, class ToSize, asPosEndo, fromPos, toPos, toRegion, toSize)
 import Math (sqrt)
 
-
--- | Constructs a `Rect` from four values
-makeRect :: forall a. a -> a -> a -> a -> Rect a
-makeRect x y w h = Rect (x >< y) (w >< h)
 
 -- | Get the length of a position vector
 length :: forall p. ToPos Number p => p -> Number

@@ -2,8 +2,8 @@
   "name": "purescript-polymorphic-vectors",
   "license": "MIT",
   "repository": {
-      "type": "git",
-      "url": "https://github.com/3ddyy/purescript-polymorphic-vectors.git"
+    "type": "git",
+    "url": "https://github.com/3ddyy/purescript-polymorphic-vectors.git"
   },
   "ignore": [
     "**/.*",
@@ -14,7 +14,9 @@
   "dependencies": {
     "purescript-prelude": "^4.1.1",
     "purescript-math": "^2.1.1",
-    "purescript-canvas": "^4.0.0"
+    "purescript-canvas": "^4.0.0",
+    "purescript-distributive": "^4.0.0",
+    "purescript-foldable-traversable": "^4.1.1"
   },
   "devDependencies": {
     "purescript-psci-support": "^4.0.0"
