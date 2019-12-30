@@ -20,7 +20,6 @@ module Data.Vector.Polymorphic
 
 import Prelude
 
-import Control.Apply (lift3)
 import Graphics.Canvas (Rectangle)
 import Data.Vector.Polymorphic.Types (Rect(..), (><))
 import Data.Vector.Polymorphic.Types (Rect(..), Vector2(..), (><)) as Types
@@ -66,10 +65,12 @@ putInsideMod
   :: forall r p n
    . ToRegion n r => AsPosEndo n p => EuclideanRing n
   => r -> p -> p
-putInsideMod = toRegion >>> \(Rect rectpos rectsize) ->
-  asPosEndo $ lift3 (\rpos rsize pos -> ((pos - rpos) `mod` rsize) + rpos)
-    rectpos
-    rectsize
+putInsideMod inputRect = asPosEndo \inputPos -> ado
+  rpos <- rectPos
+  rsize <- rectSize
+  pos <- inputPos
+  in ((pos - rpos) `mod` rsize) + rpos
+    where (Rect rectPos rectSize) = toRegion inputRect
 
 -- | Get the area of a size
 area :: forall s n. ToSize n s => Semiring n => s -> n
