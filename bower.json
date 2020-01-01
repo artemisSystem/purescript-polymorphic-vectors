@@ -1,24 +1,26 @@
 {
-  "name": "purescript-polymorphic-vectors",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/3ddyy/purescript-polymorphic-vectors.git"
-  },
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "output"
-  ],
-  "dependencies": {
-    "purescript-prelude": "^4.1.1",
-    "purescript-math": "^2.1.1",
-    "purescript-canvas": "^4.0.0",
-    "purescript-distributive": "^4.0.0",
-    "purescript-foldable-traversable": "^4.1.1"
-  },
-  "devDependencies": {
-    "purescript-psci-support": "^4.0.0"
-  }
+    "name": "purescript-polymorphic-vectors",
+    "license": [
+        "MIT"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/3ddyy/purescript-polymorphic-vectors.git"
+    },
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "output"
+    ],
+    "dependencies": {
+        "purescript-canvas": "^v4.0.0",
+        "purescript-console": "^v4.3.0",
+        "purescript-distributive": "^v4.0.0",
+        "purescript-effect": "^v2.0.1",
+        "purescript-foldable-traversable": "^v4.1.1",
+        "purescript-math": "^v2.1.1",
+        "purescript-prelude": "^v4.1.1",
+        "purescript-psci-support": "^v4.0.0"
+    }
 }
