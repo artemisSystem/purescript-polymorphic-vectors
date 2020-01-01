@@ -3,7 +3,7 @@ module Data.Vector.Polymorphic.Types where
 import Prelude
 
 import Control.Apply (lift2)
-import Data.Distributive (class Distributive, collectDefault)
+import Data.Distributive (class Distributive, collectDefault, distribute)
 import Data.Foldable (class Foldable)
 import Data.Traversable (class Traversable)
 import Data.Semigroup.Traversable (class Traversable1, traverse1Default, traverse1, sequence1)
@@ -37,7 +37,7 @@ instance applicativeVector2 :: Applicative Vector2 where
   pure x = x >< x
 
 instance bindVector2 :: Bind Vector2 where
-  bind (x >< y) f = getX (f x) >< getY (f y)
+  bind vec f = distribute f <*> vec
 
 instance monadVector2 :: Monad Vector2
 
@@ -71,7 +71,9 @@ instance traversableVector2 :: Traversable Vector2 where
   traverse = traverse1
 
 instance distributiveVector2 :: Distributive Vector2 where
-  distribute fvec = (getX <$> fvec) >< (getY <$> fvec)
+  distribute fvec = (><)
+    do getX <$> fvec
+    do getY <$> fvec
   collect = collectDefault
 
 
@@ -105,11 +107,7 @@ instance applicativeRect :: Applicative Rect where
   pure x = Rect (pure x) (pure x)
 
 instance bindRect :: Bind Rect where
-  bind (Rect (x >< y) (w >< h)) f = makeRect
-    do getX <<< getPos  $ f x
-    do getY <<< getPos  $ f y
-    do getX <<< getSize $ f w
-    do getY <<< getSize $ f h
+  bind rect f = distribute f <*> rect
 
 instance monadRect :: Monad Rect
 
