@@ -7,7 +7,7 @@ import Prelude
 import Data.Vector.Polymorphic ((><))
 import Data.Vector.Polymorphic.Class (class ToPos)
 
-minusone ∷  ∀ a. Ring a ⇒ a
+minusone ∷ ∀ a. Ring a ⇒ a
 minusone = negate one
 
 data Direction a

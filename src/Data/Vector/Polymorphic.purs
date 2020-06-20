@@ -27,19 +27,17 @@ import Math (sqrt)
 
 
 -- | Get the length of a position vector
-length ∷  ∀ p. ToPos Number p ⇒ p → Number
+length ∷ ∀ p. ToPos Number p ⇒ p → Number
 length = toPos >>> \(x >< y) → sqrt (x * x + y * y)
 
 -- | Get the diagonal of a size
-diagonal ∷  ∀ s. ToSize Number s ⇒ s → Number
+diagonal ∷ ∀ s. ToSize Number s ⇒ s → Number
 diagonal = toSize >>> \(w >< h) → sqrt (w * w + h * h)
 
 -- | Checks if a position is inside a region. Size of the region should be
 -- | positive. Inclusive on the lower bound, exclusive on the higher bound.
-inside
-  ∷  ∀ r p n
-   . ToRegion n r ⇒ ToPos n p ⇒ Ord n ⇒ Semiring n
-  ⇒ r → p → Boolean
+inside ∷
+  ∀ r p n. ToRegion n r ⇒ ToPos n p ⇒ Ord n ⇒ Semiring n ⇒ r → p → Boolean
 inside region pos = case toRegion region, toPos pos of
   Rect (rx >< ry) (rw >< rh), (x >< y)
     | x < rx       → false
@@ -49,17 +47,13 @@ inside region pos = case toRegion region, toPos pos of
     | otherwise    → true
 
 -- | `inside`, but with its result negated.
-outside
-  ∷  ∀ r p n
-  . ToRegion n r ⇒ ToPos n p ⇒ Ord n ⇒ Semiring n
-  ⇒ r → p → Boolean
+outside ∷
+  ∀ r p n. ToRegion n r ⇒ ToPos n p ⇒ Ord n ⇒ Semiring n ⇒ r → p → Boolean
 outside = not <$> inside
 
 -- | Put a position inside a region by using the modulus operator
-putInsideMod
-  ∷  ∀ r p n
-   . ToRegion n r ⇒ AsPosEndo n p ⇒ EuclideanRing n
-  ⇒ r → p → p
+putInsideMod ∷
+  ∀ r p n. ToRegion n r ⇒ AsPosEndo n p ⇒ EuclideanRing n ⇒ r → p → p
 putInsideMod inputRect = asPosEndo \inputPos → ado
   rpos ← rectPos
   rsize ← rectSize
@@ -68,52 +62,48 @@ putInsideMod inputRect = asPosEndo \inputPos → ado
     where (Rect rectPos rectSize) = toRegion inputRect
 
 -- | Get the area of a size
-area ∷  ∀ s n. ToSize n s ⇒ Semiring n ⇒ s → n
+area ∷ ∀ s n. ToSize n s ⇒ Semiring n ⇒ s → n
 area = toSize >>> \(w >< h) → w * h
 
 -- | Get the perimeter of a size
-perimeter ∷  ∀ s n. ToSize n s ⇒ Semiring n ⇒ s → n
+perimeter ∷ ∀ s n. ToSize n s ⇒ Semiring n ⇒ s → n
 perimeter = toSize >>> \(w >< h) → (w + w + h + h)
 
 -- | Get the ratio of a size by dividing the width by the height
-ratio ∷  ∀ s n. ToSize n s ⇒ EuclideanRing n ⇒ s → n
+ratio ∷ ∀ s n. ToSize n s ⇒ EuclideanRing n ⇒ s → n
 ratio = toSize >>> \(w >< h) → w / h
 
 -- | Get the center position of a region
-midPos ∷  ∀ s p n. ToRegion n s ⇒ FromPos n p ⇒ EuclideanRing n ⇒ s → p
+midPos ∷ ∀ s p n. ToRegion n s ⇒ FromPos n p ⇒ EuclideanRing n ⇒ s → p
 midPos region = fromPos $ (\p s → p + half s) <$> pos <*> size
   where
     (Rect pos size) = toRegion region
     half n = n / (one + one)
 
 -- | Get the dot product of two vectors
-dot ∷  ∀ p n. ToPos n p ⇒ Semiring n ⇒ p → p → n
+dot ∷ ∀ p n. ToPos n p ⇒ Semiring n ⇒ p → p → n
 dot p1 p2 = x1 * x2 + y1 * y2
   where
     (x1 >< y1) = toPos p1
     (x2 >< y2) = toPos p2
 
 -- | Check if two vectors are perpendicular
-perpendicular
-  ∷  ∀ p n. ToPos n p ⇒ Semiring n ⇒ Eq n ⇒ p → p → Boolean
+perpendicular ∷ ∀ p n. ToPos n p ⇒ Semiring n ⇒ Eq n ⇒ p → p → Boolean
 perpendicular p1 p2 = dot p1 p2 == zero
 
 -- | Check if two vectors are parallel
-parallel
-  ∷  ∀ p n. ToPos n p ⇒ EuclideanRing n ⇒ Eq n ⇒ p → p → Boolean
+parallel ∷ ∀ p n. ToPos n p ⇒ EuclideanRing n ⇒ Eq n ⇒ p → p → Boolean
 parallel p1 p2 = case toPos p1, toPos p2 of
   (x1 >< y1), (x2 >< y2)
     | y1 == zero || y2 == zero → y1 == y2
     | otherwise                → x1 / y1 == x2 / y2
 
 -- | Turn a region into a `Rectangle`
-toRectangleWith
-  ∷  ∀ n r
-   . ToRegion n r ⇒ Semiring n
-   ⇒ (n → Number) → r → Rectangle
+toRectangleWith ∷
+  ∀ n r. ToRegion n r ⇒ Semiring n ⇒ (n → Number) → r → Rectangle
 toRectangleWith f = toRegion >>> map f >>>
   \(Rect (x >< y) (width >< height)) → { x, y, width, height }
 
 -- | Turn a region represented with `Number`s into a `Rectangle`
-toRectangle ∷  ∀ r. ToRegion Number r ⇒ r → Rectangle
+toRectangle ∷ ∀ r. ToRegion Number r ⇒ r → Rectangle
 toRectangle = toRectangleWith identity

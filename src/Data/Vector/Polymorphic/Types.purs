@@ -14,11 +14,11 @@ data Vector2 a = Vector2 a a
 infix 2 Vector2 as ><
 
 -- | Get the x value from a `Vector2`
-getX ∷  ∀ a. Vector2 a → a
+getX ∷ ∀ a. Vector2 a → a
 getX (x >< _) = x
 
 -- | Get the y value from a `Vector2`
-getY ∷  ∀ a. Vector2 a → a
+getY ∷ ∀ a. Vector2 a → a
 getY (_ >< y) = y
 
 derive instance eqVector2 ∷ Eq a ⇒ Eq (Vector2 a)
@@ -80,15 +80,15 @@ instance distributiveVector2 ∷ Distributive Vector2 where
 data Rect a = Rect (Vector2 a) (Vector2 a)
 
 -- | Get the topleft position of a `Rect`
-getPos ∷  ∀ a. Rect a → Vector2 a
+getPos ∷ ∀ a. Rect a → Vector2 a
 getPos (Rect pos _) = pos
 
 -- | Get the size of a `Rect`
-getSize ∷  ∀ a. Rect a → Vector2 a
+getSize ∷ ∀ a. Rect a → Vector2 a
 getSize (Rect _ size) = size
 
 -- | Constructs a `Rect` from four values
-makeRect ∷  ∀ a. a → a → a → a → Rect a
+makeRect ∷ ∀ a. a → a → a → a → Rect a
 makeRect x y w h = Rect (x >< y) (w >< h)
 
 derive instance eqRect ∷ Eq a ⇒ Eq (Rect a)
@@ -141,9 +141,9 @@ instance traversableRect ∷ Traversable Rect where
   traverse = traverse1
 
 instance distributiveRect ∷ Distributive Rect where
-  distribute frect = makeRect
-    do getX <<< getPos  <$> frect
-    do getY <<< getPos  <$> frect
-    do getX <<< getSize <$> frect
-    do getY <<< getSize <$> frect
+  distribute fRect = makeRect
+    do getX <<< getPos  <$> fRect
+    do getY <<< getPos  <$> fRect
+    do getX <<< getSize <$> fRect
+    do getY <<< getSize <$> fRect
   collect = collectDefault
