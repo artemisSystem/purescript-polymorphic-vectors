@@ -7,7 +7,7 @@ import Prelude
 import Data.Vector.Polymorphic ((><))
 import Data.Vector.Polymorphic.Class (class ToPos)
 
-minusone :: forall a. Ring a => a
+minusone ∷  ∀ a. Ring a ⇒ a
 minusone = negate one
 
 data Direction a
@@ -21,9 +21,9 @@ data Direction a
   | Downright
   | None
 
-derive instance eqDirection :: Eq (Direction a)
+derive instance eqDirection ∷ Eq (Direction a)
 
-instance showDirection :: Show (Direction a) where
+instance showDirection ∷ Show (Direction a) where
   show Right     = "Right"
   show Upright   = "Upright"
   show Up        = "Up"
@@ -34,7 +34,7 @@ instance showDirection :: Show (Direction a) where
   show Downright = "Downright"
   show None      = "None"
 
-instance toPosDirection :: Ring a => ToPos a (Direction a) where
+instance toPosDirection ∷ Ring a ⇒ ToPos a (Direction a) where
   toPos Right     =      one >< zero
   toPos Upright   =      one >< minusone
   toPos Up        =     zero >< minusone
