@@ -53,6 +53,20 @@ instance semiringVector2 ∷ Semiring a ⇒ Semiring (Vector2 a) where
   mul = lift2 mul
   one = pure one
 
+instance ringVector2 ∷ Ring a ⇒ Ring (Vector2 a) where
+  sub = lift2 sub
+
+instance divisionRingVector2 ∷ DivisionRing a ⇒ DivisionRing (Vector2 a) where
+  recip = map recip
+
+instance commutativeRingVector2 ∷ CommutativeRing a ⇒ CommutativeRing (Vector2 a)
+
+instance euclideanRingVector2 ∷ EuclideanRing a ⇒ EuclideanRing (Vector2 a)
+  where
+    degree _ = 1
+    div = lift2 div
+    mod = lift2 mod
+
 instance foldable1Vector2 ∷ Foldable1 Vector2 where
   fold1 (x >< y) = x <> y
   foldMap1 f (x >< y) = f x <> f y
