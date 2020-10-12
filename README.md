@@ -6,6 +6,10 @@
 spago install polymorphic-vectors
 ```
 
+## Developing
+
+Open the REPL using `npm run repl` (`spago -x dev.dhall repl`).
+
 ## Documentation
 
 ### Reference

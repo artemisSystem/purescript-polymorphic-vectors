@@ -1,0 +1,5 @@
+{ "private": true
+, "scripts":
+  { "repl": "spago -x dev.dhall repl"
+  }
+}
