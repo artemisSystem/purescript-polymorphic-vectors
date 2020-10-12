@@ -1,0 +1,3 @@
+import Prelude
+import Data.Vector.Polymorphic
+import Data.Vector.Polymorphic.Class
