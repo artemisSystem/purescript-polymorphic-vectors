@@ -1,5 +1,5 @@
 let conf = ./spago.dhall
 
-in conf // {
-  dependencies = conf.dependencies # [ "psci-support", "console", "effect" ]
-}
+in conf //
+  { dependencies = conf.dependencies # [ "console", "effect", "psci-support" ]
+  }
