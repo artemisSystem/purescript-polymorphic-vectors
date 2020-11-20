@@ -9,5 +9,5 @@
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs" ]
 , license = "MIT"
-, repository = "https://github.com/3ddyy/purescript-polymorphic-vectors.git"
+, repository = "https://github.com/artemisSystem/purescript-polymorphic-vectors.git"
 }
