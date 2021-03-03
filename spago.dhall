@@ -1,13 +1,15 @@
 { name = "polymorphic-vectors"
 , dependencies =
-  [ "canvas"
-  , "distributive"
+  [ "distributive"
   , "foldable-traversable"
   , "math"
   , "prelude"
+  , "record"
+  , "typelevel-prelude"
   ]
 , packages = ./packages.dhall
 , sources = [ "src/**/*.purs" ]
 , license = "MIT"
-, repository = "https://github.com/artemisSystem/purescript-polymorphic-vectors.git"
+, repository =
+    "https://github.com/artemisSystem/purescript-polymorphic-vectors.git"
 }

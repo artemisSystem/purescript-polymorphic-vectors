@@ -5,9 +5,9 @@ import Prelude
 import Control.Apply (lift2)
 import Data.Distributive (class Distributive, collectDefault, distribute)
 import Data.Foldable (class Foldable)
-import Data.Traversable (class Traversable)
+import Data.Semigroup.Foldable (class Foldable1, foldMap1, foldl1Default, foldr1Default)
 import Data.Semigroup.Traversable (class Traversable1, traverse1Default, traverse1, sequence1)
-import Data.Semigroup.Foldable (class Foldable1, foldMap1)
+import Data.Traversable (class Traversable)
 
 data Vector2 a = Vector2 a a
 
@@ -68,8 +68,9 @@ instance euclideanRingVector2 ∷ EuclideanRing a ⇒ EuclideanRing (Vector2 a)
     mod = lift2 mod
 
 instance foldable1Vector2 ∷ Foldable1 Vector2 where
-  fold1 (x >< y) = x <> y
   foldMap1 f (x >< y) = f x <> f y
+  foldr1 f = foldr1Default f
+  foldl1 f = foldl1Default f
 
 instance foldableVector2 ∷ Foldable Vector2 where
   foldr f z (x >< y) = x `f` (y `f` z)
@@ -138,8 +139,9 @@ instance semiringRect ∷ Semiring a ⇒ Semiring (Rect a) where
   one = pure one
 
 instance foldable1Rect ∷ Foldable1 Rect where
-  fold1 (Rect (x >< y) (w >< h)) = x <> y <> w <> h
   foldMap1 f (Rect (x >< y) (w >< h)) = f x <> f y <> f w <> f h
+  foldr1 f = foldr1Default f
+  foldl1 f = foldl1Default f
 
 instance foldableRect ∷ Foldable Rect where
   foldr f z (Rect (x >< y) (w >< h)) = x `f` (y `f` (w `f` (h `f` z)))

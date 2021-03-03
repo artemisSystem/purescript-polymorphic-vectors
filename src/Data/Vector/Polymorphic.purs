@@ -11,18 +11,18 @@ module Data.Vector.Polymorphic
   , dot
   , perpendicular
   , parallel
-  , toRectangleWith
-  , toRectangle
-  
+  , convertPos
+  , convertSize
+  , convertRegion
+
   , module Types
   ) where
 
 import Prelude
 
-import Graphics.Canvas (Rectangle)
 import Data.Vector.Polymorphic.Types (Rect(..), (><))
 import Data.Vector.Polymorphic.Types (Rect(..), Vector2(..), (><), getX, getY, getPos, getSize, makeRect) as Types
-import Data.Vector.Polymorphic.Class (class AsPosEndo, class FromPos, class ToPos, class ToRegion, class ToSize, asPosEndo, fromPos, toPos, toRegion, toSize)
+import Data.Vector.Polymorphic.Class (class AsPosEndo, class FromPos, class FromRegion, class FromSize, class ToPos, class ToRegion, class ToSize, asPosEndo, fromPos, fromRegion, fromSize, toPos, toRegion, toSize)
 import Math (sqrt)
 
 
@@ -49,7 +49,7 @@ inside region pos = case toRegion region, toPos pos of
 -- | `inside`, but with its result negated.
 outside ∷
   ∀ r p n. ToRegion n r ⇒ ToPos n p ⇒ Ord n ⇒ Semiring n ⇒ r → p → Boolean
-outside = not <$> inside
+outside = not inside
 
 -- | Put a position inside a region by using the modulus operator
 putInsideMod ∷
@@ -98,12 +98,11 @@ parallel p1 p2 = case toPos p1, toPos p2 of
     | y1 == zero || y2 == zero → y1 == y2
     | otherwise                → x1 / y1 == x2 / y2
 
--- | Turn a region into a `Rectangle`
-toRectangleWith ∷
-  ∀ n r. ToRegion n r ⇒ Semiring n ⇒ (n → Number) → r → Rectangle
-toRectangleWith f = toRegion >>> map f >>>
-  \(Rect (x >< y) (width >< height)) → { x, y, width, height }
+convertPos ∷ ∀ p1 p2 n. ToPos n p1 ⇒ FromPos n p2 ⇒ p1 → p2
+convertPos = fromPos <<< toPos
 
--- | Turn a region represented with `Number`s into a `Rectangle`
-toRectangle ∷ ∀ r. ToRegion Number r ⇒ r → Rectangle
-toRectangle = toRectangleWith identity
+convertSize ∷ ∀ p1 p2 n. ToSize n p1 ⇒ FromSize n p2 ⇒ p1 → p2
+convertSize = fromSize <<< toSize
+
+convertRegion ∷ ∀ p1 p2 n. ToRegion n p1 ⇒ FromRegion n p2 ⇒ p1 → p2
+convertRegion = fromRegion <<< toRegion
