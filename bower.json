@@ -14,10 +14,11 @@
         "output"
     ],
     "dependencies": {
-        "purescript-canvas": "^v4.0.0",
-        "purescript-distributive": "^v4.0.0",
-        "purescript-foldable-traversable": "^v4.1.1",
-        "purescript-math": "^v2.1.1",
-        "purescript-prelude": "^v4.1.1"
+        "purescript-distributive": "^v5.0.0",
+        "purescript-foldable-traversable": "^v5.0.0",
+        "purescript-math": "^v3.0.0",
+        "purescript-prelude": "^v5.0.0",
+        "purescript-record": "^v3.0.0",
+        "purescript-typelevel-prelude": "^v6.0.0"
     }
 }
