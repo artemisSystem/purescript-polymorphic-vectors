@@ -5,6 +5,7 @@ import Prelude
 import Control.Apply (lift2)
 import Data.Distributive (class Distributive, collectDefault, distribute)
 import Data.Foldable (class Foldable)
+import Data.Generic.Rep (class Generic)
 import Data.Semigroup.Foldable (class Foldable1, foldMap1, foldl1Default, foldr1Default)
 import Data.Semigroup.Traversable (class Traversable1, traverse1Default, traverse1, sequence1)
 import Data.Traversable (class Traversable)
@@ -21,76 +22,76 @@ getX (x >< _) = x
 getY ∷ ∀ a. Vector2 a → a
 getY (_ >< y) = y
 
-derive instance eqVector2 ∷ Eq a ⇒ Eq (Vector2 a)
-derive instance ordVector2 ∷ Ord a ⇒ Ord (Vector2 a)
+derive instance Generic (Vector2 a) _
+derive instance Eq a ⇒ Eq (Vector2 a)
+derive instance Ord a ⇒ Ord (Vector2 a)
 
-instance showVector2 ∷ (Show a) ⇒ Show (Vector2 a) where
+instance (Show a) ⇒ Show (Vector2 a) where
   show (a >< b) = "(" <> show a <> " >< " <> show b <> ")"
 
-instance functorVector2 ∷ Functor Vector2 where
+instance Functor Vector2 where
   map f (a >< b) = f a >< f b
 
-instance applyVector2 ∷ Apply Vector2 where
+instance Apply Vector2 where
   apply (f >< g) (x >< y) = f x >< g y
 
-instance applicativeVector2 ∷ Applicative Vector2 where
+instance Applicative Vector2 where
   pure x = x >< x
 
-instance bindVector2 ∷ Bind Vector2 where
+instance Bind Vector2 where
   bind vec f = distribute f <*> vec
 
-instance monadVector2 ∷ Monad Vector2
+instance Monad Vector2
 
-instance semigroupVector2 ∷ Semigroup a ⇒ Semigroup (Vector2 a) where
+instance Semigroup a ⇒ Semigroup (Vector2 a) where
   append (a >< b) (a' >< b') = (a <> a') >< (b <> b')
 
-instance monoidVector2 ∷ Monoid a ⇒ Monoid (Vector2 a) where
+instance Monoid a ⇒ Monoid (Vector2 a) where
   mempty = mempty >< mempty
 
-instance semiringVector2 ∷ Semiring a ⇒ Semiring (Vector2 a) where
+instance Semiring a ⇒ Semiring (Vector2 a) where
   add = lift2 add
   zero = pure zero
   mul = lift2 mul
   one = pure one
 
-instance ringVector2 ∷ Ring a ⇒ Ring (Vector2 a) where
+instance Ring a ⇒ Ring (Vector2 a) where
   sub = lift2 sub
 
-instance divisionRingVector2 ∷ DivisionRing a ⇒ DivisionRing (Vector2 a) where
+instance DivisionRing a ⇒ DivisionRing (Vector2 a) where
   recip = map recip
 
-instance commutativeRingVector2 ∷ CommutativeRing a ⇒ CommutativeRing (Vector2 a)
+instance CommutativeRing a ⇒ CommutativeRing (Vector2 a)
 
-instance euclideanRingVector2 ∷ EuclideanRing a ⇒ EuclideanRing (Vector2 a)
+instance EuclideanRing a ⇒ EuclideanRing (Vector2 a)
   where
-    degree _ = 1
-    div = lift2 div
-    mod = lift2 mod
+  degree _ = 1
+  div = lift2 div
+  mod = lift2 mod
 
-instance foldable1Vector2 ∷ Foldable1 Vector2 where
+instance Foldable1 Vector2 where
   foldMap1 f (x >< y) = f x <> f y
   foldr1 f = foldr1Default f
   foldl1 f = foldl1Default f
 
-instance foldableVector2 ∷ Foldable Vector2 where
+instance Foldable Vector2 where
   foldr f z (x >< y) = x `f` (y `f` z)
   foldl f z (x >< y) = (z `f` x) `f` y
   foldMap = foldMap1
 
-instance traversable1Vector2 ∷ Traversable1 Vector2 where
+instance Traversable1 Vector2 where
   sequence1 (fx >< fy) = (><) <$> fx <*> fy
   traverse1 = traverse1Default
 
-instance traversableVector2 ∷ Traversable Vector2 where
+instance Traversable Vector2 where
   sequence = sequence1
   traverse = traverse1
 
-instance distributiveVector2 ∷ Distributive Vector2 where
+instance Distributive Vector2 where
   distribute fvec = (><)
     do getX <$> fvec
     do getY <$> fvec
   collect = collectDefault
-
 
 data Rect a = Rect (Vector2 a) (Vector2 a)
 
@@ -106,60 +107,61 @@ getSize (Rect _ size) = size
 makeRect ∷ ∀ a. a → a → a → a → Rect a
 makeRect x y w h = Rect (x >< y) (w >< h)
 
-derive instance eqRect ∷ Eq a ⇒ Eq (Rect a)
-derive instance ordRect ∷ Ord a ⇒ Ord (Rect a)
+derive instance Generic (Rect a) _
+derive instance Eq a ⇒ Eq (Rect a)
+derive instance Ord a ⇒ Ord (Rect a)
 
-instance showRect ∷ Show a ⇒ Show (Rect a) where
+instance Show a ⇒ Show (Rect a) where
   show (Rect pos size) = "(Rect " <> show pos <> " " <> show size <> ")"
 
-instance functorRect ∷ Functor Rect where
+instance Functor Rect where
   map f (Rect xy wh) = Rect (map f xy) (map f wh)
 
-instance applyRect ∷ Apply Rect where
+instance Apply Rect where
   apply (Rect ab cd) (Rect xy wh) = Rect (apply ab xy) (apply cd wh)
 
-instance applicativeRect ∷ Applicative Rect where
+instance Applicative Rect where
   pure x = Rect (pure x) (pure x)
 
-instance bindRect ∷ Bind Rect where
+instance Bind Rect where
   bind rect f = distribute f <*> rect
 
-instance monadRect ∷ Monad Rect
+instance Monad Rect
 
-instance semigroupRect ∷ Semigroup a ⇒ Semigroup (Rect a) where
+instance Semigroup a ⇒ Semigroup (Rect a) where
   append (Rect a b) (Rect a' b') = Rect (a <> a') (b <> b')
 
-instance monoidRect ∷ Monoid a ⇒ Monoid (Rect a) where
+instance Monoid a ⇒ Monoid (Rect a) where
   mempty = Rect mempty mempty
 
-instance semiringRect ∷ Semiring a ⇒ Semiring (Rect a) where
+instance Semiring a ⇒ Semiring (Rect a) where
   add = lift2 add
   zero = pure zero
   mul = lift2 mul
   one = pure one
 
-instance foldable1Rect ∷ Foldable1 Rect where
+instance Foldable1 Rect where
   foldMap1 f (Rect (x >< y) (w >< h)) = f x <> f y <> f w <> f h
   foldr1 f = foldr1Default f
   foldl1 f = foldl1Default f
 
-instance foldableRect ∷ Foldable Rect where
+instance Foldable Rect where
   foldr f z (Rect (x >< y) (w >< h)) = x `f` (y `f` (w `f` (h `f` z)))
   foldl f z (Rect (x >< y) (w >< h)) = (((z `f` x) `f` y) `f` w) `f` h
   foldMap = foldMap1
 
-instance traversable1Rect ∷ Traversable1 Rect where
+instance Traversable1 Rect where
   sequence1 (Rect (fx >< fy) (fw >< fh)) = makeRect <$> fx <*> fy <*> fw <*> fh
   traverse1 = traverse1Default
 
-instance traversableRect ∷ Traversable Rect where
+instance Traversable Rect where
   sequence = sequence1
   traverse = traverse1
 
-instance distributiveRect ∷ Distributive Rect where
+instance Distributive Rect where
   distribute fRect = makeRect
-    do getX <<< getPos  <$> fRect
-    do getY <<< getPos  <$> fRect
+    do getX <<< getPos <$> fRect
+    do getY <<< getPos <$> fRect
     do getX <<< getSize <$> fRect
     do getY <<< getSize <$> fRect
   collect = collectDefault

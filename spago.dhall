@@ -2,9 +2,11 @@
 , dependencies =
   [ "distributive"
   , "foldable-traversable"
-  , "math"
+  , "numbers"
   , "prelude"
   , "record"
+  , "safe-coerce"
+  , "type-equality"
   , "typelevel-prelude"
   ]
 , packages = ./packages.dhall
