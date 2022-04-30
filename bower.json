@@ -14,11 +14,13 @@
         "output"
     ],
     "dependencies": {
-        "purescript-distributive": "^v5.0.0",
-        "purescript-foldable-traversable": "^v5.0.0",
-        "purescript-math": "^v3.0.0",
-        "purescript-prelude": "^v5.0.0",
-        "purescript-record": "^v3.0.0",
-        "purescript-typelevel-prelude": "^v6.0.0"
+        "purescript-distributive": "^v6.0.0",
+        "purescript-foldable-traversable": "^v6.0.0",
+        "purescript-numbers": "^v9.0.0",
+        "purescript-prelude": "^v6.0.0",
+        "purescript-record": "^v4.0.0",
+        "purescript-safe-coerce": "^v2.0.0",
+        "purescript-type-equality": "^v4.0.1",
+        "purescript-typelevel-prelude": "^v7.0.0"
     }
 }
