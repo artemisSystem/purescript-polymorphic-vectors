@@ -97,7 +97,7 @@ instance FromPos a (Vector2 a) where
 instance Semiring a ⇒ FromPos a (Rect a) where
   fromPos pos = Rect pos zero
 
-instance fromPosXY ∷
+instance
   ( TypeEquals r1 (XY a r)
   , Nub (XY a r) (XY a r)
   , Semiring (Record r)
@@ -142,7 +142,7 @@ class AsPos a b pa pb | pa → a, pb → b, pa b → pb where
 instance AsPos a b (Vector2 a) (Vector2 b) where
   asPos = identity
 
-instance asPosXY ∷
+instance
   ( TypeEquals r1 (XY a r)
   , TypeEquals r2 (XY b r)
   ) ⇒
@@ -181,7 +181,7 @@ instance FromSize a (Vector2 a) where
 instance Semiring a ⇒ FromSize a (Rect a) where
   fromSize size = Rect zero size
 
-instance fromSizeWH ∷
+instance
   ( TypeEquals r1 (WH a r)
   , Semiring (Record r)
   , Nub (WH a r) (WH a r)
@@ -227,7 +227,7 @@ class AsSize a b sa sb | sa → a, sb → b, sa b → sb where
 instance AsSize a b (Vector2 a) (Vector2 b) where
   asSize = identity
 
-instance asSizeWH ∷
+instance
   ( TypeEquals r1 (WH a r)
   , TypeEquals r2 (WH b r)
   ) ⇒
@@ -278,7 +278,7 @@ instance FromRegion a (Vector2 a) where
 instance FromRegion a (Rect a) where
   fromRegion = identity
 
-instance fromRegionXYWH ∷
+instance
   ( TypeEquals r1 (XYWH a r)
   , Semiring (Record r)
   , Nub (XYWH a r) (XYWH a r)
@@ -302,7 +302,7 @@ instance Semiring a ⇒ AsRegionEndo a (Vector2 a) where
 instance AsRegionEndo a (Rect a) where
   asRegionEndo = identity
 
-instance asRegionEndoXYWH ∷
+instance
   TypeEquals r1 (XYWH a r) ⇒
   AsRegionEndo a (Record r1) where
   asRegionEndo f r1 = do
@@ -332,7 +332,7 @@ instance Semiring a ⇒ AsRegion a b (Vector2 a) (Vector2 b)
 instance AsRegion a b (Rect a) (Rect b) where
   asRegion = identity
 
-instance asRegionXYWH ∷
+instance
   ( TypeEquals r1 (XYWH a r)
   , TypeEquals r2 (XYWH b r)
   ) ⇒
