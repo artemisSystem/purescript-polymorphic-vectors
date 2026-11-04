@@ -8,7 +8,7 @@ spago install polymorphic-vectors
 
 ## Developing
 
-Open the REPL using `npm run repl` (`npx spago -x dev.dhall repl`).
+Open the REPL using `npm run repl` (`npx spago repl -p polymorphic-vectors-dev`).
 
 ## Documentation
 
